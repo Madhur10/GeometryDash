@@ -1,0 +1,41 @@
+package com.util;
+
+import com.file.Parser;
+import com.file.Serialize;
+
+public class Vector2 extends Serialize {
+
+    public float x, y;
+
+    public Vector2(float x, float y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public Vector2(){
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public Vector2 copy(){
+        return new Vector2(this.x, this.y);
+    }
+
+    @Override
+    public String serialize(int tabsize) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(addFloatProperty("x", x, tabsize , true, true));
+        builder.append(addFloatProperty("y", y, tabsize , true, false));
+
+        return builder.toString();
+    }
+
+    public static Vector2 deserialize(){
+        float x = Parser.consumeFloatProperty("x");
+        Parser.consume(',');
+        float y = Parser.consumeFloatProperty("y");
+
+        return new Vector2(x, y);
+    }
+}
